@@ -1,14 +1,26 @@
-apiVersion: apps/v1
+apiVersion: v1
+kind: Service
+metadata:
+  name: playerapp-svc
+  labels:
+    app: playerapp
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: playerapp
+---
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: players
-  labels:
-    app: players
+  name: playerapp
 spec:
   replicas: 3
-  selector:
-    matchLabels:
-      app: players
+  template:
+    metadata:
+      labels:
+        app: playerapp
     spec:
       containers:
       - name: playerapp
